@@ -271,6 +271,10 @@ function TeacherPermissionsPanel({
             <span className="text-sm text-[var(--ink-muted)]">مفيش مواد مسموحة بعد</span>
           )}
         </div>
+        <p className="text-xs text-[var(--ink-muted)]">
+          اختاري دولة ومنهج ومرحلة وصف ومادة، ثم دوسي &quot;+ إضافة المادة&quot; — اختيارها من القوائم لوحده مش
+          كافي.
+        </p>
         <div className="flex flex-wrap items-center gap-2">
           <CatalogPicker value={picker} onChange={setPicker} />
           <button
@@ -406,10 +410,9 @@ function AdminTeachersContent() {
                         {teacher.user.status === 'active' ? 'إيقاف' : 'تفعيل'}
                       </button>
                       <button
-                        onClick={() =>
-                          setPermissionsEditingId(permissionsEditingId === teacher._id ? null : teacher._id)
-                        }
-                        className="rounded-full border border-[var(--line)] px-3 py-1 text-xs"
+                        onClick={() => setPermissionsEditingId(teacher._id)}
+                        disabled={permissionsEditingId === teacher._id}
+                        className="rounded-full border border-[var(--line)] px-3 py-1 text-xs disabled:opacity-50"
                       >
                         الدول والمواد
                       </button>
