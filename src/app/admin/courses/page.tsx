@@ -157,6 +157,19 @@ function CourseManageRow({ course, onChanged }: { course: Course; onChanged: () 
     }
   }
 
+  async function submitForReview() {
+    setIsSubmitting(true);
+    setError(null);
+    try {
+      await api.patch(`/courses/${course._id}/submit`);
+      onChanged();
+    } catch (apiError) {
+      setError(getApiErrorMessage(apiError).message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <div className={cardClass}>
       <div className="flex flex-wrap items-start justify-between gap-2">
@@ -171,6 +184,16 @@ function CourseManageRow({ course, onChanged }: { course: Course; onChanged: () 
       </div>
 
       {error && <p className="mt-2 text-sm text-[var(--bad)]">{error}</p>}
+
+      {(course.status === 'draft' || course.status === 'unpublished') && (
+        <button
+          onClick={submitForReview}
+          disabled={isSubmitting}
+          className={`${primaryButtonClass} !px-4 !py-1 mt-3 text-sm`}
+        >
+          إرسال للمراجعة
+        </button>
+      )}
 
       {course.status === 'pending_review' && (
         <div className="mt-3">
