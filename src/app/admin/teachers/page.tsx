@@ -171,6 +171,7 @@ function TeacherPermissionsPanel({
   const [picker, setPicker] = useState<CatalogSelection>(EMPTY_CATALOG_SELECTION);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   useEffect(() => {
     api
@@ -219,8 +220,10 @@ function TeacherPermissionsPanel({
   async function handleSave() {
     setIsSubmitting(true);
     setError(null);
+    setSuccessMessage(null);
     try {
       await api.patch(`/teachers/${teacher._id}`, { allowedCountryIds, allowedSubjectIds });
+      setSuccessMessage('تم الحفظ');
       onSaved();
     } catch (apiError) {
       setError(getApiErrorMessage(apiError).message);
@@ -288,13 +291,14 @@ function TeacherPermissionsPanel({
       </div>
 
       {error && <p className="text-sm text-[var(--bad)]">{error}</p>}
+      {successMessage && <p className="text-sm font-semibold text-green-700">{successMessage} ✓</p>}
 
       <div className="flex gap-2">
         <button onClick={handleSave} disabled={isSubmitting} className={`${primaryButtonClass} w-fit`}>
           {isSubmitting ? '...جارٍ الحفظ' : 'حفظ الصلاحيات'}
         </button>
-        <button onClick={onCancel} className="text-sm text-[var(--ink-muted)]">
-          إغلاق
+        <button onClick={onCancel} className="text-sm font-semibold text-[var(--ink-muted)] underline">
+          إغلاق بدون حفظ
         </button>
       </div>
     </div>
@@ -424,10 +428,7 @@ function AdminTeachersContent() {
                     <td colSpan={5} className="p-0">
                       <TeacherPermissionsPanel
                         teacher={teacher}
-                        onSaved={() => {
-                          setPermissionsEditingId(null);
-                          refresh();
-                        }}
+                        onSaved={refresh}
                         onCancel={() => setPermissionsEditingId(null)}
                       />
                     </td>
