@@ -47,6 +47,9 @@ export function SiteHeader() {
                 <Link href="/admin/applications" className="text-[var(--navy-950)] hover:underline">
                   طلبات المدرسين
                 </Link>
+                <Link href="/admin/catalog" className="text-[var(--navy-950)] hover:underline">
+                  الكتالوج
+                </Link>
                 <Link href="/admin/courses" className="text-[var(--navy-950)] hover:underline">
                   الكورسات
                 </Link>
