@@ -1,10 +1,11 @@
 'use client';
 
-import { useCallback, useEffect, useState, type FormEvent } from 'react';
+import { Fragment, useCallback, useEffect, useState, type FormEvent } from 'react';
 import { api, getApiErrorMessage, type ApiErrorDetail } from '@/lib/api';
 import { RequireRole } from '@/components/RequireRole';
+import { CatalogPicker, EMPTY_CATALOG_SELECTION, type CatalogSelection } from '@/components/CatalogPicker';
 import { cardClass, ghostButtonClass, inputClass, primaryButtonClass } from '@/lib/ui';
-import type { Pagination, TeacherProfile } from '@/lib/types';
+import type { CatalogItem, Pagination, TeacherProfile } from '@/lib/types';
 
 function CreateTeacherForm({ onCreated }: { onCreated: () => void }) {
   const [name, setName] = useState('');
@@ -154,6 +155,148 @@ function EditCommissionForm({
   );
 }
 
+function TeacherPermissionsPanel({
+  teacher,
+  onSaved,
+  onCancel,
+}: {
+  teacher: TeacherProfile;
+  onSaved: () => void;
+  onCancel: () => void;
+}) {
+  const [countries, setCountries] = useState<CatalogItem[]>([]);
+  const [allowedCountryIds, setAllowedCountryIds] = useState<string[]>(teacher.allowedCountryIds);
+  const [allowedSubjectIds, setAllowedSubjectIds] = useState<string[]>(teacher.allowedSubjectIds);
+  const [subjectNames, setSubjectNames] = useState<Record<string, string>>({});
+  const [picker, setPicker] = useState<CatalogSelection>(EMPTY_CATALOG_SELECTION);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    api
+      .get('/catalog/countries', { params: { limit: 100 } })
+      .then((response) => setCountries(response.data.data.countries))
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+    const missing = allowedSubjectIds.filter((id) => !subjectNames[id]);
+    if (missing.length === 0) return;
+    Promise.all(
+      missing.map((id) =>
+        api
+          .get(`/catalog/subjects/${id}`)
+          .then((response) => [id, response.data.data.name.ar] as const)
+          .catch(() => [id, id] as const),
+      ),
+    ).then((pairs) => {
+      if (isMounted) {
+        setSubjectNames((previous) => ({ ...previous, ...Object.fromEntries(pairs) }));
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [allowedSubjectIds, subjectNames]);
+
+  function toggleCountry(id: string) {
+    setAllowedCountryIds((previous) =>
+      previous.includes(id) ? previous.filter((item) => item !== id) : [...previous, id],
+    );
+  }
+
+  function addSubject() {
+    if (!picker.subjectId || allowedSubjectIds.includes(picker.subjectId)) return;
+    setAllowedSubjectIds((previous) => [...previous, picker.subjectId]);
+    setPicker(EMPTY_CATALOG_SELECTION);
+  }
+
+  function removeSubject(id: string) {
+    setAllowedSubjectIds((previous) => previous.filter((item) => item !== id));
+  }
+
+  async function handleSave() {
+    setIsSubmitting(true);
+    setError(null);
+    try {
+      await api.patch(`/teachers/${teacher._id}`, { allowedCountryIds, allowedSubjectIds });
+      onSaved();
+    } catch (apiError) {
+      setError(getApiErrorMessage(apiError).message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  return (
+    <div className="flex flex-col gap-4 border-t border-[var(--line)] p-4">
+      <div>
+        <h3 className="mb-2 text-sm font-bold text-[var(--navy-950)]">الدول المسموحة</h3>
+        <div className="flex flex-wrap gap-2">
+          {countries.map((country) => (
+            <button
+              key={country._id}
+              onClick={() => toggleCountry(country._id)}
+              className={`rounded-full border px-3 py-1 text-sm ${
+                allowedCountryIds.includes(country._id)
+                  ? 'border-[var(--navy-950)] bg-[var(--navy-950)] text-white'
+                  : 'border-[var(--line)]'
+              }`}
+            >
+              {country.name.ar}
+            </button>
+          ))}
+          {countries.length === 0 && (
+            <span className="text-sm text-[var(--ink-muted)]">مفيش دول في الكتالوج بعد</span>
+          )}
+        </div>
+      </div>
+
+      <div>
+        <h3 className="mb-2 text-sm font-bold text-[var(--navy-950)]">المواد المسموحة</h3>
+        <div className="mb-2 flex flex-wrap gap-2">
+          {allowedSubjectIds.map((id) => (
+            <span
+              key={id}
+              className="flex items-center gap-2 rounded-full border border-[var(--line)] px-3 py-1 text-sm"
+            >
+              {subjectNames[id] ?? '...'}
+              <button onClick={() => removeSubject(id)} className="text-[var(--bad)]">
+                ×
+              </button>
+            </span>
+          ))}
+          {allowedSubjectIds.length === 0 && (
+            <span className="text-sm text-[var(--ink-muted)]">مفيش مواد مسموحة بعد</span>
+          )}
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <CatalogPicker value={picker} onChange={setPicker} />
+          <button
+            onClick={addSubject}
+            disabled={!picker.subjectId}
+            className={`${ghostButtonClass} !px-3 !py-1 text-sm`}
+          >
+            + إضافة المادة
+          </button>
+        </div>
+      </div>
+
+      {error && <p className="text-sm text-[var(--bad)]">{error}</p>}
+
+      <div className="flex gap-2">
+        <button onClick={handleSave} disabled={isSubmitting} className={`${primaryButtonClass} w-fit`}>
+          {isSubmitting ? '...جارٍ الحفظ' : 'حفظ الصلاحيات'}
+        </button>
+        <button onClick={onCancel} className="text-sm text-[var(--ink-muted)]">
+          إغلاق
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function AdminTeachersContent() {
   const [teachers, setTeachers] = useState<TeacherProfile[]>([]);
   const [pagination, setPagination] = useState<Pagination | null>(null);
@@ -161,6 +304,7 @@ function AdminTeachersContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [permissionsEditingId, setPermissionsEditingId] = useState<string | null>(null);
   const [pendingUserId, setPendingUserId] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
   const refresh = useCallback(() => setReloadKey((key) => key + 1), []);
@@ -228,7 +372,8 @@ function AdminTeachersContent() {
             </thead>
             <tbody>
               {teachers.map((teacher) => (
-                <tr key={teacher._id} className="border-b border-[var(--line)] last:border-0">
+                <Fragment key={teacher._id}>
+                <tr className="border-b border-[var(--line)] last:border-0">
                   <td className="p-3">{teacher.user.name}</td>
                   <td className="p-3">{teacher.user.email}</td>
                   <td className="p-3">
@@ -252,15 +397,40 @@ function AdminTeachersContent() {
                   </td>
                   <td className="p-3">{teacher.user.status === 'active' ? 'نشط' : 'موقوف'}</td>
                   <td className="p-3">
-                    <button
-                      onClick={() => toggleUserStatus(teacher)}
-                      disabled={pendingUserId === teacher.user._id}
-                      className="rounded-full border border-[var(--line)] px-3 py-1 text-xs disabled:opacity-50"
-                    >
-                      {teacher.user.status === 'active' ? 'إيقاف' : 'تفعيل'}
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => toggleUserStatus(teacher)}
+                        disabled={pendingUserId === teacher.user._id}
+                        className="rounded-full border border-[var(--line)] px-3 py-1 text-xs disabled:opacity-50"
+                      >
+                        {teacher.user.status === 'active' ? 'إيقاف' : 'تفعيل'}
+                      </button>
+                      <button
+                        onClick={() =>
+                          setPermissionsEditingId(permissionsEditingId === teacher._id ? null : teacher._id)
+                        }
+                        className="rounded-full border border-[var(--line)] px-3 py-1 text-xs"
+                      >
+                        الدول والمواد
+                      </button>
+                    </div>
                   </td>
                 </tr>
+                {permissionsEditingId === teacher._id && (
+                  <tr>
+                    <td colSpan={5} className="p-0">
+                      <TeacherPermissionsPanel
+                        teacher={teacher}
+                        onSaved={() => {
+                          setPermissionsEditingId(null);
+                          refresh();
+                        }}
+                        onCancel={() => setPermissionsEditingId(null)}
+                      />
+                    </td>
+                  </tr>
+                )}
+                </Fragment>
               ))}
             </tbody>
           </table>
