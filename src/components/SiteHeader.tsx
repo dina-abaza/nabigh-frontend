@@ -10,19 +10,31 @@ export function SiteHeader() {
   const { user, isLoading, logout } = useAuth();
 
   return (
-    <header className="flex items-center justify-between border-b border-[var(--line)] bg-white px-6 py-4">
+    <header className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line)] bg-white px-6 py-4">
       <Logo />
 
-      <nav className="flex items-center gap-4 text-sm font-medium text-[var(--ink-muted)]">
+      <nav className="flex flex-wrap items-center gap-4 text-sm font-medium text-[var(--ink-muted)]">
+        <Link href="/courses" className="hover:underline">
+          الكورسات
+        </Link>
+
         {isLoading ? null : user ? (
           <>
             <Link href="/profile" className="text-[var(--navy-950)] hover:underline">
               ملفي
             </Link>
             {user.role === 'teacher' && (
-              <Link href="/teacher" className="text-[var(--navy-950)] hover:underline">
-                ملف المدرس
-              </Link>
+              <>
+                <Link href="/teacher" className="text-[var(--navy-950)] hover:underline">
+                  ملف المدرس
+                </Link>
+                <Link href="/teacher/courses" className="text-[var(--navy-950)] hover:underline">
+                  كورساتي
+                </Link>
+                <Link href="/teacher/offers" className="text-[var(--navy-950)] hover:underline">
+                  عروض الأسعار
+                </Link>
+              </>
             )}
             {user.role === 'admin' && (
               <>
@@ -34,6 +46,15 @@ export function SiteHeader() {
                 </Link>
                 <Link href="/admin/applications" className="text-[var(--navy-950)] hover:underline">
                   طلبات المدرسين
+                </Link>
+                <Link href="/admin/courses" className="text-[var(--navy-950)] hover:underline">
+                  الكورسات
+                </Link>
+                <Link href="/admin/offers" className="text-[var(--navy-950)] hover:underline">
+                  عروض الأسعار
+                </Link>
+                <Link href="/admin/video-settings" className="text-[var(--navy-950)] hover:underline">
+                  إعداد الفيديو
                 </Link>
               </>
             )}
