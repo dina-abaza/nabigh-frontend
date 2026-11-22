@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useEffect, useState, type FormEvent } from 'react';
 import { api, getApiErrorMessage, type ApiErrorDetail } from '@/lib/api';
+import { useAuth } from '@/context/AuthContext';
 import { RequireRole } from '@/components/RequireRole';
 import { CatalogPicker, EMPTY_CATALOG_SELECTION, type CatalogSelection } from '@/components/CatalogPicker';
 import { ghostButtonClass, inputClass, primaryButtonClass } from '@/lib/ui';
@@ -196,14 +197,16 @@ function EditCourseForm({ course, onUpdated }: { course: Course; onUpdated: (cou
 
 function TeacherCourseDetailContent() {
   const params = useParams<{ courseId: string }>();
+  const { user } = useAuth();
   const [course, setCourse] = useState<Course | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
+    const path = user?.role === 'admin' ? 'manage' : 'mine';
     api
-      .get(`/courses/mine/${params.courseId}`)
+      .get(`/courses/${path}/${params.courseId}`)
       .then((response) => {
         if (isMounted) setCourse(response.data.data);
       })
@@ -216,7 +219,7 @@ function TeacherCourseDetailContent() {
     return () => {
       isMounted = false;
     };
-  }, [params.courseId]);
+  }, [params.courseId, user?.role]);
 
   if (isLoading) return <p className="text-[var(--ink-muted)]">...جارٍ التحميل</p>;
   if (error || !course) return <p className="text-[var(--bad)]">{error ?? 'تعذر تحميل الكورس'}</p>;
@@ -226,7 +229,7 @@ function TeacherCourseDetailContent() {
 
 export default function TeacherCourseDetailPage() {
   return (
-    <RequireRole role="teacher">
+    <RequireRole role={['teacher', 'admin']}>
       <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-8">
         <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">تعديل الكورس</h1>
         <TeacherCourseDetailContent />
