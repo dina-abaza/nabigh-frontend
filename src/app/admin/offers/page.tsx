@@ -27,7 +27,7 @@ function OfferReviewRow({ offer, onChanged }: { offer: SubjectOffer; onChanged: 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function review(decision: 'approved' | 'rejected') {
+  async function review(decision: 'approve' | 'reject') {
     setIsSubmitting(true);
     setError(null);
     try {
@@ -78,14 +78,14 @@ function OfferReviewRow({ offer, onChanged }: { offer: SubjectOffer; onChanged: 
               />
               <div className="flex gap-2">
                 <button
-                  onClick={() => review('approved')}
+                  onClick={() => review('approve')}
                   disabled={isSubmitting}
                   className={`${primaryButtonClass} !px-4 !py-1 text-sm`}
                 >
                   اعتماد
                 </button>
                 <button
-                  onClick={() => review('rejected')}
+                  onClick={() => review('reject')}
                   disabled={isSubmitting}
                   className={`${ghostButtonClass} !px-4 !py-1 text-sm`}
                 >
