@@ -132,3 +132,57 @@ export interface VideoSettings {
   credentials: { key: string; configured: boolean }[];
   updatedAt?: string;
 }
+
+export type SubscriptionStatus = 'active' | 'cancelled' | 'pending_payment';
+
+export interface SubscriptionCourseRef {
+  _id: string;
+  title: string;
+  teacherId: string;
+  price: number;
+  subjectId: string;
+  status: CourseStatus;
+}
+
+export interface Subscription {
+  _id: string;
+  studentId: string | AdminUser;
+  courseId: SubscriptionCourseRef | string;
+  status: SubscriptionStatus;
+  activationMethod: 'manual' | 'payment';
+  activatedBy?: string;
+  activatedAt?: string;
+  cancelledBy?: string;
+  cancelledAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface LearnerLesson {
+  _id: string;
+  title: string;
+  order: number;
+  durationMinutes: number;
+  completed: boolean;
+  completedAt: string | null;
+  unlocked: boolean;
+}
+
+export interface CourseProgressSummary {
+  totalLessons: number;
+  completedLessons: number;
+  completionPercent: number;
+  nextLessonId: string | null;
+}
+
+export interface CourseLessonsResponse {
+  course: { _id: string; title: string };
+  lessons: LearnerLesson[];
+  summary: CourseProgressSummary;
+}
+
+export interface LessonPlayback {
+  type: 'iframe' | 'hls';
+  url: string;
+  expiresAt: string | null;
+}

@@ -23,6 +23,11 @@ export function SiteHeader() {
             <Link href="/profile" className="text-[var(--navy-950)] hover:underline">
               ملفي
             </Link>
+            {user.role === 'student' && (
+              <Link href="/my-courses" className="text-[var(--navy-950)] hover:underline">
+                كورساتي
+              </Link>
+            )}
             {user.role === 'teacher' && (
               <>
                 <Link href="/teacher" className="text-[var(--navy-950)] hover:underline">
@@ -58,6 +63,9 @@ export function SiteHeader() {
                 </Link>
                 <Link href="/admin/video-settings" className="text-[var(--navy-950)] hover:underline">
                   إعداد الفيديو
+                </Link>
+                <Link href="/admin/subscriptions" className="text-[var(--navy-950)] hover:underline">
+                  الاشتراكات
                 </Link>
               </>
             )}
