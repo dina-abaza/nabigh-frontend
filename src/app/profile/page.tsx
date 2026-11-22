@@ -5,6 +5,9 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { useAuth, type AuthUser } from '@/context/AuthContext';
 import { getApiErrorMessage, type ApiErrorDetail } from '@/lib/api';
 import { cardClass, inputClass, primaryButtonClass } from '@/lib/ui';
+import { DashboardSidebar } from '@/components/DashboardSidebar';
+import { StudentSidebar } from '@/components/StudentSidebar';
+import { ADMIN_NAV_ITEMS, TEACHER_NAV_ITEMS } from '@/lib/nav';
 
 const ROLE_LABELS: Record<string, string> = {
   student: 'طالب',
@@ -112,10 +115,35 @@ export default function ProfilePage() {
     );
   }
 
-  return (
+  const content = (
     <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center gap-6 p-8">
       <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">ملفي الشخصي</h1>
       <ProfileForm key={user.id} user={user} />
     </main>
+  );
+
+  if (user.role === 'admin') {
+    return (
+      <div className="flex flex-1">
+        <DashboardSidebar items={ADMIN_NAV_ITEMS} />
+        <div className="flex flex-1 flex-col overflow-x-auto">{content}</div>
+      </div>
+    );
+  }
+
+  if (user.role === 'teacher') {
+    return (
+      <div className="flex flex-1">
+        <DashboardSidebar items={TEACHER_NAV_ITEMS} />
+        <div className="flex flex-1 flex-col overflow-x-auto">{content}</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-1">
+      <StudentSidebar />
+      <div className="flex flex-1 flex-col overflow-x-auto">{content}</div>
+    </div>
   );
 }

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { api, getApiErrorMessage } from '@/lib/api';
 import { RequireRole } from '@/components/RequireRole';
+import { StudentSidebar } from '@/components/StudentSidebar';
 import { cardClass } from '@/lib/ui';
 import type { Subscription, SubscriptionStatus } from '@/lib/types';
 
@@ -85,11 +86,16 @@ function MyCoursesContent() {
 
 export default function MyCoursesPage() {
   return (
-    <RequireRole role="student">
-      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-8">
-        <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">كورساتي</h1>
-        <MyCoursesContent />
-      </main>
-    </RequireRole>
+    <div className="flex flex-1">
+      <StudentSidebar />
+      <div className="flex flex-1 flex-col overflow-x-auto">
+        <RequireRole role="student">
+          <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-8">
+            <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">كورساتي</h1>
+            <MyCoursesContent />
+          </main>
+        </RequireRole>
+      </div>
+    </div>
   );
 }

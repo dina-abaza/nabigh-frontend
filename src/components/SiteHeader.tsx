@@ -23,69 +23,6 @@ export function SiteHeader() {
             <Link href="/profile" className="text-[var(--navy-950)] hover:underline">
               ملفي
             </Link>
-            {user.role === 'student' && (
-              <>
-                <Link href="/my-courses" className="text-[var(--navy-950)] hover:underline">
-                  كورساتي
-                </Link>
-                <Link href="/payments" className="text-[var(--navy-950)] hover:underline">
-                  مدفوعاتي
-                </Link>
-              </>
-            )}
-            {user.role === 'teacher' && (
-              <>
-                <Link href="/teacher" className="text-[var(--navy-950)] hover:underline">
-                  ملف المدرس
-                </Link>
-                <Link href="/teacher/courses" className="text-[var(--navy-950)] hover:underline">
-                  كورساتي
-                </Link>
-                <Link href="/teacher/offers" className="text-[var(--navy-950)] hover:underline">
-                  عروض الأسعار
-                </Link>
-                <Link href="/teacher/settlements" className="text-[var(--navy-950)] hover:underline">
-                  مستحقاتي
-                </Link>
-              </>
-            )}
-            {user.role === 'admin' && (
-              <>
-                <Link href="/admin/users" className="text-[var(--navy-950)] hover:underline">
-                  المستخدمون
-                </Link>
-                <Link href="/admin/teachers" className="text-[var(--navy-950)] hover:underline">
-                  المدرسون
-                </Link>
-                <Link href="/admin/applications" className="text-[var(--navy-950)] hover:underline">
-                  طلبات المدرسين
-                </Link>
-                <Link href="/admin/catalog" className="text-[var(--navy-950)] hover:underline">
-                  الكتالوج
-                </Link>
-                <Link href="/admin/courses" className="text-[var(--navy-950)] hover:underline">
-                  الكورسات
-                </Link>
-                <Link href="/admin/offers" className="text-[var(--navy-950)] hover:underline">
-                  عروض الأسعار
-                </Link>
-                <Link href="/admin/video-settings" className="text-[var(--navy-950)] hover:underline">
-                  إعداد الفيديو
-                </Link>
-                <Link href="/admin/subscriptions" className="text-[var(--navy-950)] hover:underline">
-                  الاشتراكات
-                </Link>
-                <Link href="/admin/payment-gateways" className="text-[var(--navy-950)] hover:underline">
-                  بوابات الدفع
-                </Link>
-                <Link href="/admin/payments" className="text-[var(--navy-950)] hover:underline">
-                  المدفوعات
-                </Link>
-                <Link href="/admin/settlements" className="text-[var(--navy-950)] hover:underline">
-                  المستحقات
-                </Link>
-              </>
-            )}
             <button
               onClick={() => {
                 logout();
