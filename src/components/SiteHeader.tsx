@@ -1,13 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { Logo } from '@/components/Logo';
 
 export function SiteHeader() {
-  const router = useRouter();
-  const { user, isLoading, logout } = useAuth();
+  const { user, isLoading } = useAuth();
 
   return (
     <header className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line)] bg-white px-6 py-4">
@@ -19,20 +17,12 @@ export function SiteHeader() {
         </Link>
 
         {isLoading ? null : user ? (
-          <>
-            <Link href="/profile" className="text-[var(--navy-950)] hover:underline">
-              ملفي
-            </Link>
-            <button
-              onClick={() => {
-                logout();
-                router.push('/');
-              }}
-              className="rounded-full border border-[var(--line)] px-4 py-1.5 text-sm font-semibold text-[var(--ink)]"
-            >
-              خروج
-            </button>
-          </>
+          <Link
+            href="/profile"
+            className="rounded-full bg-[var(--navy-950)] px-4 py-1.5 text-sm font-bold text-white"
+          >
+            حسابي
+          </Link>
         ) : (
           <>
             <Link href="/become-teacher" className="hover:underline">
