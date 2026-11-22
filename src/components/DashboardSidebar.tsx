@@ -22,7 +22,7 @@ export function DashboardSidebar({ items }: { items: SidebarItem[] }) {
         <span className="font-heading text-sm font-extrabold text-white">نابغ</span>
       </div>
 
-      <nav className="flex flex-1 flex-col gap-1">
+      <nav className="flex flex-col gap-1">
         {items.map((item) => {
           const isActive = pathname === item.href;
           return (
@@ -46,7 +46,7 @@ export function DashboardSidebar({ items }: { items: SidebarItem[] }) {
           logout();
           router.push('/');
         }}
-        className="rounded-lg px-3 py-2 text-start text-sm font-semibold text-[#c7cdee] hover:text-white"
+        className="mt-3 rounded-lg px-3 py-2 text-start text-sm font-semibold text-[#c7cdee] hover:text-white"
       >
         خروج
       </button>

@@ -36,7 +36,7 @@ export function StudentSidebar() {
         </div>
       </div>
 
-      <nav className="flex flex-1 flex-col gap-1">
+      <nav className="flex flex-col gap-1">
         {ITEMS.map((item) => {
           const isActive = pathname === item.href;
           return (
@@ -58,7 +58,7 @@ export function StudentSidebar() {
           logout();
           router.push('/');
         }}
-        className="rounded-lg px-3 py-2 text-start text-sm font-semibold text-[var(--ink-muted)]"
+        className="mt-3 rounded-lg px-3 py-2 text-start text-sm font-semibold text-[var(--ink-muted)]"
       >
         خروج
       </button>
