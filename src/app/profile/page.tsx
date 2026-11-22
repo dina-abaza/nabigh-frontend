@@ -7,6 +7,7 @@ import { getApiErrorMessage, type ApiErrorDetail } from '@/lib/api';
 import { cardClass, inputClass, primaryButtonClass } from '@/lib/ui';
 import { DashboardSidebar } from '@/components/DashboardSidebar';
 import { StudentSidebar } from '@/components/StudentSidebar';
+import { DashboardTopbar } from '@/components/DashboardTopbar';
 import { ADMIN_NAV_ITEMS, TEACHER_NAV_ITEMS } from '@/lib/nav';
 
 const ROLE_LABELS: Record<string, string> = {
@@ -126,7 +127,10 @@ export default function ProfilePage() {
     return (
       <div className="flex flex-1">
         <DashboardSidebar items={ADMIN_NAV_ITEMS} />
-        <div className="flex flex-1 flex-col overflow-x-auto">{content}</div>
+        <div className="flex flex-1 flex-col overflow-x-auto">
+          <DashboardTopbar />
+          {content}
+        </div>
       </div>
     );
   }
@@ -135,7 +139,10 @@ export default function ProfilePage() {
     return (
       <div className="flex flex-1">
         <DashboardSidebar items={TEACHER_NAV_ITEMS} />
-        <div className="flex flex-1 flex-col overflow-x-auto">{content}</div>
+        <div className="flex flex-1 flex-col overflow-x-auto">
+          <DashboardTopbar />
+          {content}
+        </div>
       </div>
     );
   }
@@ -143,7 +150,10 @@ export default function ProfilePage() {
   return (
     <div className="flex flex-1">
       <StudentSidebar />
-      <div className="flex flex-1 flex-col overflow-x-auto">{content}</div>
+      <div className="flex flex-1 flex-col overflow-x-auto">
+        <DashboardTopbar />
+        {content}
+      </div>
     </div>
   );
 }
