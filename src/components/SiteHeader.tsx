@@ -24,9 +24,14 @@ export function SiteHeader() {
               ملفي
             </Link>
             {user.role === 'student' && (
-              <Link href="/my-courses" className="text-[var(--navy-950)] hover:underline">
-                كورساتي
-              </Link>
+              <>
+                <Link href="/my-courses" className="text-[var(--navy-950)] hover:underline">
+                  كورساتي
+                </Link>
+                <Link href="/payments" className="text-[var(--navy-950)] hover:underline">
+                  مدفوعاتي
+                </Link>
+              </>
             )}
             {user.role === 'teacher' && (
               <>
@@ -38,6 +43,9 @@ export function SiteHeader() {
                 </Link>
                 <Link href="/teacher/offers" className="text-[var(--navy-950)] hover:underline">
                   عروض الأسعار
+                </Link>
+                <Link href="/teacher/settlements" className="text-[var(--navy-950)] hover:underline">
+                  مستحقاتي
                 </Link>
               </>
             )}
@@ -66,6 +74,15 @@ export function SiteHeader() {
                 </Link>
                 <Link href="/admin/subscriptions" className="text-[var(--navy-950)] hover:underline">
                   الاشتراكات
+                </Link>
+                <Link href="/admin/payment-gateways" className="text-[var(--navy-950)] hover:underline">
+                  بوابات الدفع
+                </Link>
+                <Link href="/admin/payments" className="text-[var(--navy-950)] hover:underline">
+                  المدفوعات
+                </Link>
+                <Link href="/admin/settlements" className="text-[var(--navy-950)] hover:underline">
+                  المستحقات
                 </Link>
               </>
             )}

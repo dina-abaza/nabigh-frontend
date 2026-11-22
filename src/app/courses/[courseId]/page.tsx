@@ -1,8 +1,10 @@
 'use client';
 
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { api, getApiErrorMessage } from '@/lib/api';
+import { useAuth } from '@/context/AuthContext';
 import { cardClass, primaryButtonClass } from '@/lib/ui';
 import { piastresToEgp } from '@/lib/money';
 import type { Course } from '@/lib/types';
@@ -13,6 +15,7 @@ function teacherName(course: Course): string {
 
 export default function CourseDetailPage() {
   const params = useParams<{ courseId: string }>();
+  const { user, isLoading: isAuthLoading } = useAuth();
   const [course, setCourse] = useState<Course | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -64,9 +67,19 @@ export default function CourseDetailPage() {
 
       <div className={cardClass}>
         <p className="mb-3 font-heading text-xl font-extrabold">{piastresToEgp(course.price)} ج.م</p>
-        <button className={`${primaryButtonClass} w-full`} disabled title="الاشتراك والدفع يأتيان في مرحلة لاحقة">
-          اشترك في الكورس
-        </button>
+        {isAuthLoading ? null : !user ? (
+          <Link href="/login" className={`${primaryButtonClass} block w-full text-center`}>
+            سجلي الدخول للاشتراك
+          </Link>
+        ) : user.role === 'student' ? (
+          <Link href={`/checkout/${course._id}`} className={`${primaryButtonClass} block w-full text-center`}>
+            اشترك في الكورس
+          </Link>
+        ) : (
+          <button className={`${primaryButtonClass} w-full`} disabled title="الاشتراك متاح لحساب الطالب فقط">
+            اشترك في الكورس
+          </button>
+        )}
       </div>
     </main>
   );

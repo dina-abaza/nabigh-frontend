@@ -186,3 +186,85 @@ export interface LessonPlayback {
   url: string;
   expiresAt: string | null;
 }
+
+export interface PaymentMethodDef {
+  id: string;
+  name: string;
+  liveOnly?: boolean;
+  refunds?: boolean;
+}
+
+export interface PaymentProviderDef {
+  id: string;
+  name: string;
+  currencies: string[];
+  methods: PaymentMethodDef[];
+  credentials: { key: string; label: string }[];
+  webhookUrl: string | null;
+}
+
+export interface FeeRule {
+  method: string;
+  currency: string;
+  percentBps: number;
+  fixedMinor: number;
+}
+
+export interface PaymentGatewayConfig {
+  id: string;
+  name: string;
+  enabled: boolean;
+  configuredCredentials: string[];
+  methods: string[];
+  currencies: string[];
+  feeRules: FeeRule[];
+  webhookUrl: string | null;
+  updatedAt: string | null;
+}
+
+export interface PublicPaymentMethod {
+  id: string;
+  name: string;
+}
+
+export interface PublicPaymentGateway {
+  id: string;
+  name: string;
+  methods: PublicPaymentMethod[];
+  currencies: string[];
+}
+
+export type PaymentStatus = 'pending' | 'paid' | 'failed' | 'cancelled' | 'refunded';
+
+export interface Payment {
+  _id: string;
+  provider: string;
+  method: string;
+  currency: string;
+  amountMinor: number;
+  commissionMinor: number;
+  gatewayFeeMinor: number;
+  teacherNetMinor: number;
+  platformNetMinor: number;
+  status: PaymentStatus;
+  courseId?: string;
+  studentId?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export type SettlementStatus = string;
+
+export interface Settlement {
+  _id: string;
+  teacherId: string;
+  grossMinor: number;
+  commissionMinor: number;
+  gatewayFeeMinor: number;
+  teacherNetMinor: number;
+  platformNetMinor: number;
+  currency: string;
+  status: SettlementStatus;
+  createdAt?: string;
+  updatedAt?: string;
+}
