@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import { api, getApiErrorMessage } from '@/lib/api';
 import { RequireRole } from '@/components/RequireRole';
@@ -157,6 +158,19 @@ function CourseManageRow({ course, onChanged }: { course: Course; onChanged: () 
     }
   }
 
+  async function withdraw() {
+    setIsSubmitting(true);
+    setError(null);
+    try {
+      await api.patch(`/courses/${course._id}/withdraw`);
+      onChanged();
+    } catch (apiError) {
+      setError(getApiErrorMessage(apiError).message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   async function submitForReview() {
     setIsSubmitting(true);
     setError(null);
@@ -234,6 +248,16 @@ function CourseManageRow({ course, onChanged }: { course: Course; onChanged: () 
         </div>
       )}
 
+      {course.status === 'published' && (
+        <button
+          onClick={withdraw}
+          disabled={isSubmitting}
+          className={`${ghostButtonClass} !px-4 !py-1 mt-3 text-sm`}
+        >
+          سحب الكورس
+        </button>
+      )}
+
       {course.status === 'unpublished' && (
         <button
           onClick={archive}
@@ -243,6 +267,13 @@ function CourseManageRow({ course, onChanged }: { course: Course; onChanged: () 
           أرشفة
         </button>
       )}
+
+      <Link
+        href={`/teacher/courses/${course._id}/lessons`}
+        className="mt-3 inline-block text-sm text-[var(--navy-950)] underline"
+      >
+        إدارة الدروس
+      </Link>
     </div>
   );
 }

@@ -366,7 +366,7 @@ export default function TeacherLessonsPage() {
   const params = useParams<{ courseId: string }>();
 
   return (
-    <RequireRole role="teacher">
+    <RequireRole role={['teacher', 'admin']}>
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 p-8">
         <div className="flex items-center justify-between">
           <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">دروس الكورس</h1>
