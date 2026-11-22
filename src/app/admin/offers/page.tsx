@@ -105,7 +105,7 @@ function OfferReviewRow({ offer, onChanged }: { offer: SubjectOffer; onChanged: 
 
 function AdminOffersContent() {
   const [offers, setOffers] = useState<SubjectOffer[]>([]);
-  const [status, setStatus] = useState('pending_review');
+  const [status, setStatus] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);

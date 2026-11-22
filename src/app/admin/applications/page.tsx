@@ -126,7 +126,7 @@ function AdminApplicationsContent() {
   const [applications, setApplications] = useState<TeacherApplication[]>([]);
   const [pagination, setPagination] = useState<Pagination | null>(null);
   const [page, setPage] = useState(1);
-  const [status, setStatus] = useState<ApplicationStatus | ''>('pending');
+  const [status, setStatus] = useState<ApplicationStatus | ''>('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
