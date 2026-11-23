@@ -8,7 +8,7 @@ import { useAuth } from '@/context/AuthContext';
 import { RequireRole } from '@/components/RequireRole';
 import { CatalogPicker, EMPTY_CATALOG_SELECTION, type CatalogSelection } from '@/components/CatalogPicker';
 import { ghostButtonClass, inputClass, primaryButtonClass } from '@/lib/ui';
-import { egpToPiastres, piastresToEgp } from '@/lib/money';
+import { egpToPiastres, piastresToEgp, usdCentsToUsd, usdToUsdCents } from '@/lib/money';
 import type { Course, CourseStatus } from '@/lib/types';
 
 const STATUS_LABELS: Record<CourseStatus, string> = {
@@ -23,6 +23,7 @@ function EditCourseForm({ course, onUpdated }: { course: Course; onUpdated: (cou
   const [title, setTitle] = useState(course.title);
   const [description, setDescription] = useState(course.description);
   const [price, setPrice] = useState(piastresToEgp(course.price));
+  const [priceUsd, setPriceUsd] = useState(usdCentsToUsd(course.priceUsd));
   const [selection, setSelection] = useState<CatalogSelection>({
     ...EMPTY_CATALOG_SELECTION,
     countryId: course.countryId,
@@ -66,6 +67,7 @@ function EditCourseForm({ course, onUpdated }: { course: Course; onUpdated: (cou
         title,
         description,
         price: egpToPiastres(price),
+        priceUsd: usdToUsdCents(priceUsd),
         countryId: selection.countryId,
         curriculumId: selection.curriculumId,
         gradeId: selection.gradeId,
@@ -166,17 +168,34 @@ function EditCourseForm({ course, onUpdated }: { course: Course; onUpdated: (cou
           )}
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-sm text-[var(--ink-muted)]">السعر (جنيه مصري)</label>
-          <input
-            type="number"
-            min={0}
-            step="0.01"
-            value={price}
-            onChange={(event) => setPrice(event.target.value)}
-            className={`w-40 ${inputClass}`}
-          />
-          {fieldError('price') && <p className="text-sm text-[var(--bad)]">{fieldError('price')}</p>}
+        <div className="flex flex-wrap gap-4">
+          <div className="flex flex-col gap-1">
+            <label className="text-sm text-[var(--ink-muted)]">السعر (جنيه مصري)</label>
+            <input
+              type="number"
+              min={0}
+              step="0.01"
+              value={price}
+              onChange={(event) => setPrice(event.target.value)}
+              className={`w-40 ${inputClass}`}
+            />
+            {fieldError('price') && <p className="text-sm text-[var(--bad)]">{fieldError('price')}</p>}
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label className="text-sm text-[var(--ink-muted)]">السعر (دولار أمريكي)</label>
+            <input
+              type="number"
+              min={0}
+              step="0.01"
+              value={priceUsd}
+              onChange={(event) => setPriceUsd(event.target.value)}
+              className={`w-40 ${inputClass}`}
+            />
+            {fieldError('priceUsd') && (
+              <p className="text-sm text-[var(--bad)]">{fieldError('priceUsd')}</p>
+            )}
+          </div>
         </div>
 
         <div className="flex flex-col gap-2">

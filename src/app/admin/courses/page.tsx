@@ -6,7 +6,7 @@ import { api, getApiErrorMessage } from '@/lib/api';
 import { RequireRole } from '@/components/RequireRole';
 import { CatalogPicker, EMPTY_CATALOG_SELECTION, type CatalogSelection } from '@/components/CatalogPicker';
 import { cardClass, ghostButtonClass, inputClass, primaryButtonClass } from '@/lib/ui';
-import { egpToPiastres, piastresToEgp } from '@/lib/money';
+import { egpToPiastres, piastresToEgp, usdToUsdCents } from '@/lib/money';
 import type { Course, CourseStatus, Pagination, TeacherProfile } from '@/lib/types';
 
 const STATUS_LABELS: Record<CourseStatus, string> = {
@@ -27,6 +27,7 @@ function CreateCourseForBehalfForm({ onCreated }: { onCreated: () => void }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
+  const [priceUsd, setPriceUsd] = useState('');
   const [selection, setSelection] = useState<CatalogSelection>(EMPTY_CATALOG_SELECTION);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -48,6 +49,7 @@ function CreateCourseForBehalfForm({ onCreated }: { onCreated: () => void }) {
         title,
         description,
         price: egpToPiastres(price),
+        priceUsd: usdToUsdCents(priceUsd),
         countryId: selection.countryId,
         curriculumId: selection.curriculumId,
         gradeId: selection.gradeId,
@@ -56,6 +58,7 @@ function CreateCourseForBehalfForm({ onCreated }: { onCreated: () => void }) {
       setTitle('');
       setDescription('');
       setPrice('');
+      setPriceUsd('');
       setSelection(EMPTY_CATALOG_SELECTION);
       onCreated();
     } catch (apiError) {
@@ -107,7 +110,17 @@ function CreateCourseForBehalfForm({ onCreated }: { onCreated: () => void }) {
         value={price}
         onChange={(event) => setPrice(event.target.value)}
         required
-        className={`w-40 ${inputClass}`}
+        className={`w-32 ${inputClass}`}
+      />
+      <input
+        type="number"
+        min={0}
+        step="0.01"
+        placeholder="السعر (دولار)"
+        value={priceUsd}
+        onChange={(event) => setPriceUsd(event.target.value)}
+        required
+        className={`w-32 ${inputClass}`}
       />
       <CatalogPicker value={selection} onChange={setSelection} />
       {error && <p className="text-sm text-[var(--bad)]">{error}</p>}
