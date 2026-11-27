@@ -41,7 +41,7 @@ export default function BecomeTeacherPage() {
 
   if (submitted) {
     return (
-      <main className="mx-auto flex w-full max-w-sm flex-1 flex-col items-center justify-center gap-4 p-8 text-center">
+      <main className="mx-auto flex w-full max-w-sm flex-1 flex-col items-center justify-center gap-4 p-4 sm:p-8 text-center">
         <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">
           تم استلام طلبك
         </h1>
@@ -54,7 +54,7 @@ export default function BecomeTeacherPage() {
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center gap-6 p-8">
+    <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center gap-6 p-4 sm:p-8">
       <div>
         <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">
           الانضمام كمدرس

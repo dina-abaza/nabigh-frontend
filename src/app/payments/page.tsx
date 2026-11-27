@@ -31,14 +31,14 @@ function PaymentRow({ payment, onRefresh }: { payment: Payment; onRefresh: (id: 
   }
 
   return (
-    <div className={`${cardClass} flex items-center justify-between`}>
-      <div>
+    <div className={`${cardClass} flex flex-wrap items-center justify-between gap-2`}>
+      <div className="min-w-0">
         <p className="font-semibold">{amountDisplay(payment)}</p>
-        <p className="text-xs text-[var(--ink-muted)]">
+        <p className="truncate text-xs text-[var(--ink-muted)]">
           {payment.provider} · {payment.method}
         </p>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex flex-none items-center gap-3">
         <span className="rounded-full border border-[var(--line)] px-3 py-1 text-xs">
           {STATUS_LABELS[payment.status]}
         </span>
@@ -124,7 +124,7 @@ export default function PaymentsPage() {
       <div className="flex flex-1 flex-col overflow-x-auto">
         <DashboardTopbar />
         <RequireRole role="student">
-          <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-8">
+          <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-4 sm:p-8">
             <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">مدفوعاتي</h1>
             <PaymentsContent />
           </main>

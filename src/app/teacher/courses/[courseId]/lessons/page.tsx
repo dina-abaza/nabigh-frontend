@@ -168,7 +168,7 @@ function LessonVideoPanel({ lesson, onUpdated }: { lesson: Lesson; onUpdated: (l
       </div>
 
       {!mode ? (
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button onClick={() => setMode('file')} className={`${ghostButtonClass} !px-3 !py-1 text-xs`}>
             رفع ملف من الجهاز
           </button>
@@ -292,7 +292,7 @@ function LessonRow({ lesson, onChanged }: { lesson: Lesson; onChanged: () => voi
             </p>
             <p className="text-xs text-[var(--ink-muted)]">{lesson.durationMinutes} دقيقة</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button onClick={() => setIsEditing(true)} className="text-xs underline text-[var(--navy-950)]">
               تعديل
             </button>
@@ -367,8 +367,8 @@ export default function TeacherLessonsPage() {
 
   return (
     <RequireRole role={['teacher', 'admin']}>
-      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 p-8">
-        <div className="flex items-center justify-between">
+      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 p-4 sm:p-8">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">دروس الكورس</h1>
           <Link href={`/teacher/courses/${params.courseId}`} className="text-sm text-[var(--navy-950)] underline">
             الرجوع لبيانات الكورس

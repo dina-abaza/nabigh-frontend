@@ -39,26 +39,26 @@ function TeacherProfileContent() {
 
   return (
     <dl className={`flex flex-col gap-3 ${cardClass}`}>
-      <div className="flex justify-between">
-        <dt className="text-[var(--ink-muted)]">الاسم</dt>
-        <dd>{profile.user.name}</dd>
+      <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
+        <dt className="flex-none text-[var(--ink-muted)]">الاسم</dt>
+        <dd className="min-w-0 break-words">{profile.user.name}</dd>
       </div>
-      <div className="flex justify-between">
-        <dt className="text-[var(--ink-muted)]">البريد الإلكتروني</dt>
-        <dd>{profile.user.email}</dd>
+      <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
+        <dt className="flex-none text-[var(--ink-muted)]">البريد الإلكتروني</dt>
+        <dd className="min-w-0 break-all">{profile.user.email}</dd>
       </div>
-      <div className="flex justify-between">
-        <dt className="text-[var(--ink-muted)]">نسبة العمولة</dt>
+      <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
+        <dt className="flex-none text-[var(--ink-muted)]">نسبة العمولة</dt>
         <dd className="font-heading font-bold text-[var(--navy-950)]">
           {profile.commissionPercent}%
         </dd>
       </div>
-      <div className="flex justify-between">
-        <dt className="text-[var(--ink-muted)]">عدد الدول المسموحة</dt>
+      <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
+        <dt className="flex-none text-[var(--ink-muted)]">عدد الدول المسموحة</dt>
         <dd>{profile.allowedCountryIds.length}</dd>
       </div>
-      <div className="flex justify-between">
-        <dt className="text-[var(--ink-muted)]">عدد المواد المسموحة</dt>
+      <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
+        <dt className="flex-none text-[var(--ink-muted)]">عدد المواد المسموحة</dt>
         <dd>{profile.allowedSubjectIds.length}</dd>
       </div>
       <p className="text-xs text-[var(--ink-muted)]">
@@ -71,7 +71,7 @@ function TeacherProfileContent() {
 export default function TeacherPage() {
   return (
     <RequireRole role="teacher">
-      <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center gap-6 p-8">
+      <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center gap-6 p-4 sm:p-8">
         <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">
           ملف المدرس
         </h1>

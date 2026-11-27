@@ -66,15 +66,15 @@ function MyCoursesContent() {
   return (
     <div className="flex flex-col gap-3">
       {subscriptions.map((subscription) => (
-        <div key={subscription._id} className={`${cardClass} flex items-center justify-between`}>
-          <div>
-            <p className="font-semibold text-[var(--ink)]">{courseTitle(subscription)}</p>
+        <div key={subscription._id} className={`${cardClass} flex flex-wrap items-center justify-between gap-2`}>
+          <div className="min-w-0">
+            <p className="truncate font-semibold text-[var(--ink)]">{courseTitle(subscription)}</p>
             <p className="text-sm text-[var(--ink-muted)]">{STATUS_LABELS[subscription.status]}</p>
           </div>
           {subscription.status === 'active' && (
             <Link
               href={`/learn/${courseId(subscription)}`}
-              className="rounded-full bg-[var(--gold-500)] px-4 py-1.5 text-sm font-bold text-[var(--navy-950)]"
+              className="flex-none rounded-full bg-[var(--gold-500)] px-4 py-1.5 text-sm font-bold text-[var(--navy-950)]"
             >
               ادخلي الكورس
             </Link>
@@ -92,7 +92,7 @@ export default function MyCoursesPage() {
       <div className="flex flex-1 flex-col overflow-x-auto">
         <DashboardTopbar />
         <RequireRole role="student">
-          <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-8">
+          <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-4 sm:p-8">
             <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">كورساتي</h1>
             <MyCoursesContent />
           </main>

@@ -51,12 +51,12 @@ function ApplicationRow({
   return (
     <div className={cardClass}>
       <div className="flex flex-wrap items-start justify-between gap-2">
-        <div>
-          <p className="font-semibold text-[var(--ink)]">{application.name}</p>
-          <p className="text-sm text-[var(--ink-muted)]">{application.email}</p>
-          {application.message && <p className="mt-2 text-sm">{application.message}</p>}
+        <div className="min-w-0">
+          <p className="break-words font-semibold text-[var(--ink)]">{application.name}</p>
+          <p className="break-all text-sm text-[var(--ink-muted)]">{application.email}</p>
+          {application.message && <p className="mt-2 text-sm break-words">{application.message}</p>}
         </div>
-        <span className="rounded-full border border-[var(--line)] px-3 py-1 text-xs text-[var(--ink-muted)]">
+        <span className="flex-none rounded-full border border-[var(--line)] px-3 py-1 text-xs text-[var(--ink-muted)]">
           {STATUS_LABELS[application.status] ?? application.status}
         </span>
       </div>
@@ -91,7 +91,7 @@ function ApplicationRow({
                 className={inputClass}
               />
               {error && <p className="text-sm text-[var(--bad)]">{error}</p>}
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 <button
                   onClick={() => review('approved')}
                   disabled={isSubmitting}
@@ -194,7 +194,7 @@ function AdminApplicationsContent() {
       )}
 
       {pagination && pagination.pages > 1 && (
-        <div className="flex items-center justify-center gap-4 text-sm">
+        <div className="flex flex-wrap items-center justify-center gap-3 text-sm">
           <button
             onClick={() => setPage((current) => Math.max(1, current - 1))}
             disabled={page <= 1}
@@ -221,7 +221,7 @@ function AdminApplicationsContent() {
 export default function AdminApplicationsPage() {
   return (
     <RequireRole role="admin">
-      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 p-8">
+      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 p-4 sm:p-8">
         <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">
           طلبات الانضمام كمدرس
         </h1>

@@ -135,7 +135,7 @@ function EditCommissionForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2">
+    <form onSubmit={handleSubmit} className="flex flex-wrap items-center gap-2">
       <input
         type="number"
         min={0}
@@ -293,7 +293,7 @@ function TeacherPermissionsPanel({
       {error && <p className="text-sm text-[var(--bad)]">{error}</p>}
       {successMessage && <p className="text-sm font-semibold text-green-700">{successMessage} ✓</p>}
 
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <button onClick={handleSave} disabled={isSubmitting} className={`${primaryButtonClass} w-fit`}>
           {isSubmitting ? '...جارٍ الحفظ' : 'حفظ الصلاحيات'}
         </button>
@@ -405,7 +405,7 @@ function AdminTeachersContent() {
                   </td>
                   <td className="p-3">{teacher.user.status === 'active' ? 'نشط' : 'موقوف'}</td>
                   <td className="p-3">
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-2">
                       <button
                         onClick={() => toggleUserStatus(teacher)}
                         disabled={pendingUserId === teacher.user._id}
@@ -445,7 +445,7 @@ function AdminTeachersContent() {
       )}
 
       {pagination && pagination.pages > 1 && (
-        <div className="flex items-center justify-center gap-4 text-sm">
+        <div className="flex flex-wrap items-center justify-center gap-3 text-sm">
           <button
             onClick={() => setPage((current) => Math.max(1, current - 1))}
             disabled={page <= 1}
@@ -472,7 +472,7 @@ function AdminTeachersContent() {
 export default function AdminTeachersPage() {
   return (
     <RequireRole role="admin">
-      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 p-8">
+      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 p-4 sm:p-8">
         <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">
           إدارة المدرسين
         </h1>

@@ -32,7 +32,7 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center gap-6 p-8">
+    <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center gap-6 p-4 sm:p-8">
       <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">تسجيل الدخول</h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">

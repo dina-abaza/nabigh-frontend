@@ -82,7 +82,7 @@ function GatewayCard({
 
   return (
     <form onSubmit={handleSave} className={`${cardClass} flex flex-col gap-4`}>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="font-heading font-bold text-[var(--navy-950)]">{definition.name}</h2>
         <label className="flex items-center gap-2 text-sm">
           <input type="checkbox" checked={enabled} onChange={(event) => setEnabled(event.target.checked)} />
@@ -286,7 +286,7 @@ function AdminPaymentGatewaysContent() {
 export default function AdminPaymentGatewaysPage() {
   return (
     <RequireRole role="admin">
-      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-8">
+      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-4 sm:p-8">
         <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">بوابات الدفع</h1>
         <AdminPaymentGatewaysContent />
       </main>

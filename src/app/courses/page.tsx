@@ -43,7 +43,7 @@ export default function CoursesPage() {
   }, [page]);
 
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-6 p-8">
+    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-6 p-4 sm:p-8">
       <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">الكورسات</h1>
 
       {error && <p className="text-sm text-[var(--bad)]">{error}</p>}
@@ -67,7 +67,7 @@ export default function CoursesPage() {
       )}
 
       {pagination && pagination.pages > 1 && (
-        <div className="flex items-center justify-center gap-4 text-sm">
+        <div className="flex flex-wrap items-center justify-center gap-3 text-sm">
           <button
             onClick={() => setPage((current) => Math.max(1, current - 1))}
             disabled={page <= 1}

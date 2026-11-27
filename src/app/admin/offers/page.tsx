@@ -47,14 +47,14 @@ function OfferReviewRow({ offer, onChanged }: { offer: SubjectOffer; onChanged: 
   return (
     <div className={cardClass}>
       <div className="flex flex-wrap items-start justify-between gap-2">
-        <div>
-          <p className="font-semibold text-[var(--ink)]">
+        <div className="min-w-0">
+          <p className="break-words font-semibold text-[var(--ink)]">
             {catalogName(offer.gradeId)} — {catalogName(offer.subjectId)}
           </p>
-          <p className="text-sm text-[var(--ink-muted)]">المدرس: {teacherName(offer.teacherId)}</p>
+          <p className="break-words text-sm text-[var(--ink-muted)]">المدرس: {teacherName(offer.teacherId)}</p>
           <p className="font-heading text-sm">{piastresToEgp(offer.price)} ج.م</p>
         </div>
-        <span className="rounded-full border border-[var(--line)] px-3 py-1 text-xs text-[var(--ink-muted)]">
+        <span className="flex-none rounded-full border border-[var(--line)] px-3 py-1 text-xs text-[var(--ink-muted)]">
           {STATUS_LABELS[offer.status]}
         </span>
       </div>
@@ -76,7 +76,7 @@ function OfferReviewRow({ offer, onChanged }: { offer: SubjectOffer; onChanged: 
                 rows={2}
                 className={inputClass}
               />
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => review('approve')}
                   disabled={isSubmitting}
@@ -170,7 +170,7 @@ function AdminOffersContent() {
 export default function AdminOffersPage() {
   return (
     <RequireRole role="admin">
-      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 p-8">
+      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 p-4 sm:p-8">
         <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">
           عروض أسعار المواد الكاملة
         </h1>

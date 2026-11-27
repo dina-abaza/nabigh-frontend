@@ -230,7 +230,7 @@ export default function CheckoutPage() {
   const params = useParams<{ courseId: string }>();
   return (
     <RequireRole role="student">
-      <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-6 p-8">
+      <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-6 p-4 sm:p-8">
         <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">إتمام الاشتراك</h1>
         <CheckoutContent courseId={params.courseId} />
       </main>

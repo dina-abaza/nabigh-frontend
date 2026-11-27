@@ -55,14 +55,14 @@ function LearnCourseContent({ courseId }: { courseId: string }) {
         {lessons.map((lesson) => (
           <div
             key={lesson._id}
-            className={`${cardClass} flex items-center justify-between ${!lesson.unlocked ? 'opacity-60' : ''}`}
+            className={`${cardClass} flex flex-wrap items-center justify-between gap-3 ${!lesson.unlocked ? 'opacity-60' : ''}`}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex min-w-0 items-center gap-3">
               <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full border border-[var(--line)] text-sm font-bold">
                 {lesson.order}
               </span>
-              <div>
-                <p className="font-semibold">{lesson.title}</p>
+              <div className="min-w-0">
+                <p className="truncate font-semibold">{lesson.title}</p>
                 <p className="text-xs text-[var(--ink-muted)]">
                   {lesson.durationMinutes} دقيقة
                   {lesson.completed && ' · مكتمل ✓'}
@@ -72,12 +72,12 @@ function LearnCourseContent({ courseId }: { courseId: string }) {
             {lesson.unlocked ? (
               <Link
                 href={`/learn/${courseId}/lessons/${lesson._id}`}
-                className="rounded-full bg-[var(--gold-500)] px-4 py-1.5 text-sm font-bold text-[var(--navy-950)]"
+                className="flex-none rounded-full bg-[var(--gold-500)] px-4 py-1.5 text-sm font-bold text-[var(--navy-950)]"
               >
                 {lesson.completed ? 'مشاهدة تانية' : 'ابدئي الدرس'}
               </Link>
             ) : (
-              <span className="text-xs text-[var(--ink-muted)]">🔒 مقفول</span>
+              <span className="flex-none text-xs text-[var(--ink-muted)]">🔒 مقفول</span>
             )}
           </div>
         ))}
@@ -90,7 +90,7 @@ export default function LearnCoursePage() {
   const params = useParams<{ courseId: string }>();
   return (
     <RequireRole role="student">
-      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-8">
+      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-4 sm:p-8">
         <LearnCourseContent courseId={params.courseId} />
       </main>
     </RequireRole>

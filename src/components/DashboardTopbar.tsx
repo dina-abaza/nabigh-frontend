@@ -14,8 +14,8 @@ export function DashboardTopbar() {
   if (!user) return null;
 
   return (
-    <div className="flex items-center justify-between border-b border-[var(--line)] bg-white px-6 py-3">
-      <p className="text-sm text-[var(--ink-muted)]">
+    <div className="flex items-center justify-between border-b border-[var(--line)] bg-white py-3 pr-16 pl-6 md:px-6">
+      <p className="truncate text-sm text-[var(--ink-muted)]">
         {greeting()}، <span className="font-bold text-[var(--ink)]">{user.name}</span> 👋
       </p>
     </div>

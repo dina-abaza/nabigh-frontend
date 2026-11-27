@@ -40,7 +40,7 @@ export default function CourseDetailPage() {
 
   if (isLoading) {
     return (
-      <main className="flex flex-1 items-center justify-center p-8">
+      <main className="flex flex-1 items-center justify-center p-4 sm:p-8">
         <p className="text-[var(--ink-muted)]">...جارٍ التحميل</p>
       </main>
     );
@@ -48,14 +48,14 @@ export default function CourseDetailPage() {
 
   if (error || !course) {
     return (
-      <main className="flex flex-1 items-center justify-center p-8">
+      <main className="flex flex-1 items-center justify-center p-4 sm:p-8">
         <p className="text-[var(--bad)]">{error ?? 'هذا الكورس غير متاح'}</p>
       </main>
     );
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-8">
+    <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-4 sm:p-8">
       <div>
         <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">{course.title}</h1>
         {teacherName(course) && (

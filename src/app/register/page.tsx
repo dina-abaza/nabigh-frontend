@@ -39,7 +39,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center gap-6 p-8">
+    <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center gap-6 p-4 sm:p-8">
       <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">
         إنشاء حساب طالب
       </h1>

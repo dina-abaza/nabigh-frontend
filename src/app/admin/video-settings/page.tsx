@@ -165,7 +165,7 @@ function VideoSettingsContent() {
 export default function VideoSettingsPage() {
   return (
     <RequireRole role="admin">
-      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-8">
+      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-4 sm:p-8">
         <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">
           إعداد مزود الفيديو
         </h1>

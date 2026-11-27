@@ -200,12 +200,12 @@ function CourseManageRow({ course, onChanged }: { course: Course; onChanged: () 
   return (
     <div className={cardClass}>
       <div className="flex flex-wrap items-start justify-between gap-2">
-        <div>
-          <p className="font-semibold text-[var(--ink)]">{course.title}</p>
-          <p className="text-sm text-[var(--ink-muted)]">المدرس: {teacherName(course)}</p>
+        <div className="min-w-0">
+          <p className="break-words font-semibold text-[var(--ink)]">{course.title}</p>
+          <p className="break-words text-sm text-[var(--ink-muted)]">المدرس: {teacherName(course)}</p>
           <p className="font-heading text-sm">{piastresToEgp(course.price)} ج.م</p>
         </div>
-        <span className="rounded-full border border-[var(--line)] px-3 py-1 text-xs text-[var(--ink-muted)]">
+        <span className="flex-none rounded-full border border-[var(--line)] px-3 py-1 text-xs text-[var(--ink-muted)]">
           {STATUS_LABELS[course.status]}
         </span>
       </div>
@@ -237,7 +237,7 @@ function CourseManageRow({ course, onChanged }: { course: Course; onChanged: () 
                 rows={2}
                 className={inputClass}
               />
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => review('approve')}
                   disabled={isSubmitting}
@@ -366,7 +366,7 @@ function AdminCoursesContent() {
       )}
 
       {pagination && pagination.pages > 1 && (
-        <div className="flex items-center justify-center gap-4 text-sm">
+        <div className="flex flex-wrap items-center justify-center gap-3 text-sm">
           <button
             onClick={() => setPage((current) => Math.max(1, current - 1))}
             disabled={page <= 1}
@@ -393,7 +393,7 @@ function AdminCoursesContent() {
 export default function AdminCoursesPage() {
   return (
     <RequireRole role="admin">
-      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 p-8">
+      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 p-4 sm:p-8">
         <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">إدارة الكورسات</h1>
         <AdminCoursesContent />
       </main>

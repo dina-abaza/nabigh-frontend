@@ -116,7 +116,7 @@ function EditCourseForm({ course, onUpdated }: { course: Course; onUpdated: (cou
         <span className="rounded-full border border-[var(--line)] px-3 py-1 text-sm text-[var(--ink-muted)]">
           الحالة: {STATUS_LABELS[course.status]}
         </span>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Link href={`/teacher/courses/${course._id}/lessons`} className={ghostButtonClass}>
             إدارة الدروس
           </Link>
@@ -249,7 +249,7 @@ function TeacherCourseDetailContent() {
 export default function TeacherCourseDetailPage() {
   return (
     <RequireRole role={['teacher', 'admin']}>
-      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-8">
+      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-4 sm:p-8">
         <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">تعديل الكورس</h1>
         <TeacherCourseDetailContent />
       </main>

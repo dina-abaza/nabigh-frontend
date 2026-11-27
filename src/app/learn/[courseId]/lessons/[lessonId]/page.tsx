@@ -56,9 +56,14 @@ function LessonPlayerContent({ courseId, lessonId }: { courseId: string; lessonI
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <h1 className="font-heading text-xl font-extrabold text-[var(--navy-950)]">{lessonTitle}</h1>
-        <Link href={`/learn/${courseId}`} className="text-sm text-[var(--navy-950)] underline">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h1 className="min-w-0 truncate font-heading text-xl font-extrabold text-[var(--navy-950)]">
+          {lessonTitle}
+        </h1>
+        <Link
+          href={`/learn/${courseId}`}
+          className="flex-none text-sm text-[var(--navy-950)] underline"
+        >
           الرجوع لقائمة الدروس
         </Link>
       </div>
@@ -89,7 +94,7 @@ export default function LessonPlayerPage() {
   const params = useParams<{ courseId: string; lessonId: string }>();
   return (
     <RequireRole role="student">
-      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-8">
+      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-4 sm:p-8">
         <LessonPlayerContent courseId={params.courseId} lessonId={params.lessonId} />
       </main>
     </RequireRole>

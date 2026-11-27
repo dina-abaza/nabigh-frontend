@@ -49,12 +49,12 @@ function ProfileForm({ user }: { user: AuthUser }) {
   return (
     <>
       <dl className={`flex flex-col gap-3 ${cardClass}`}>
-        <div className="flex justify-between">
-          <dt className="text-[var(--ink-muted)]">البريد الإلكتروني</dt>
-          <dd>{user.email}</dd>
+        <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
+          <dt className="flex-none text-[var(--ink-muted)]">البريد الإلكتروني</dt>
+          <dd className="min-w-0 break-all">{user.email}</dd>
         </div>
-        <div className="flex justify-between">
-          <dt className="text-[var(--ink-muted)]">الدور</dt>
+        <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
+          <dt className="flex-none text-[var(--ink-muted)]">الدور</dt>
           <dd>{ROLE_LABELS[user.role] ?? user.role}</dd>
         </div>
       </dl>
@@ -110,14 +110,14 @@ export default function ProfilePage() {
 
   if (isLoading || !user) {
     return (
-      <main className="flex flex-1 items-center justify-center p-8">
+      <main className="flex flex-1 items-center justify-center p-4 sm:p-8">
         <p className="text-[var(--ink-muted)]">...جارٍ التحميل</p>
       </main>
     );
   }
 
   const content = (
-    <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center gap-6 p-8">
+    <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center gap-6 p-4 sm:p-8">
       <h1 className="font-heading text-2xl font-extrabold text-[var(--navy-950)]">ملفي الشخصي</h1>
       <ProfileForm key={user.id} user={user} />
     </main>
