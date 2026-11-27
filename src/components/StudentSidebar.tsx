@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { LogoMark } from '@/components/Logo';
 
 const ITEMS = [
   { href: '/', label: 'الرئيسية' },
@@ -35,15 +36,21 @@ export function StudentSidebar() {
 
   return (
     <>
-      <button
-        onClick={() => setIsOpen(true)}
-        aria-label="فتح القائمة"
-        className="fixed top-3 right-3 z-30 flex h-10 w-10 flex-none items-center justify-center rounded-lg border border-[var(--line)] bg-white text-[var(--ink)] shadow-md md:hidden"
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />
-        </svg>
-      </button>
+      <div className="fixed inset-x-0 top-0 z-30 flex h-14 flex-none items-center justify-between border-b border-[var(--line)] bg-white px-4 md:hidden">
+        <Link href="/" className="flex min-w-0 items-center gap-2">
+          <LogoMark size={26} />
+          <span className="truncate font-heading text-sm font-extrabold text-[var(--navy-950)]">نابغ</span>
+        </Link>
+        <button
+          onClick={() => setIsOpen(true)}
+          aria-label="فتح القائمة"
+          className="flex h-9 w-9 flex-none items-center justify-center rounded-lg text-[var(--ink)]"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />
+          </svg>
+        </button>
+      </div>
 
       {isOpen && (
         <div
