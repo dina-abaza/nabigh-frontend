@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 
 const ITEMS = [
+  { href: '/', label: 'الرئيسية' },
   { href: '/my-courses', label: 'كورساتي' },
   { href: '/payments', label: 'مدفوعاتي' },
   { href: '/profile', label: 'ملفي الشخصي' },

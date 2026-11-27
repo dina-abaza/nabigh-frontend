@@ -49,10 +49,10 @@ export function DashboardSidebar({ items }: { items: SidebarItem[] }) {
         }`}
       >
         <div className="mb-4 flex items-center justify-between gap-2 px-1">
-          <div className="flex min-w-0 items-center gap-2">
+          <Link href="/" className="flex min-w-0 items-center gap-2">
             <LogoMark size={28} />
             <span className="truncate font-heading text-sm font-extrabold text-white">نابغ</span>
-          </div>
+          </Link>
           <button
             onClick={() => setIsOpen(false)}
             aria-label="إغلاق القائمة"
