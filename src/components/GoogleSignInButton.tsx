@@ -20,7 +20,13 @@ declare global {
   }
 }
 
-export function GoogleSignInButton({ onError }: { onError?: (message: string) => void }) {
+export function GoogleSignInButton({
+  onError,
+  onSuccess,
+}: {
+  onError?: (message: string) => void;
+  onSuccess?: () => void;
+}) {
   const buttonRef = useRef<HTMLDivElement>(null);
   const { loginWithGoogle } = useAuth();
   const [scriptLoaded, setScriptLoaded] = useState(false);
@@ -34,6 +40,7 @@ export function GoogleSignInButton({ onError }: { onError?: (message: string) =>
       callback: async (response) => {
         try {
           await loginWithGoogle(response.credential);
+          onSuccess?.();
         } catch {
           onError?.('تعذر تسجيل الدخول بجوجل، حاول مرة أخرى');
         }
@@ -47,7 +54,7 @@ export function GoogleSignInButton({ onError }: { onError?: (message: string) =>
       locale: 'ar',
       width: 280,
     });
-  }, [scriptLoaded, clientId, loginWithGoogle, onError]);
+  }, [scriptLoaded, clientId, loginWithGoogle, onError, onSuccess]);
 
   if (!clientId) return null;
 

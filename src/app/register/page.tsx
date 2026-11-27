@@ -102,7 +102,7 @@ export default function RegisterPage() {
         <span className="h-px flex-1 bg-[var(--line)]" />
       </div>
 
-      <GoogleSignInButton onError={setFormError} />
+      <GoogleSignInButton onError={setFormError} onSuccess={() => router.push('/profile')} />
 
       <p className="text-center text-sm text-[var(--ink-muted)]">
         لديك حساب؟{' '}
